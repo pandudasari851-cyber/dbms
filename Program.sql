@@ -1,11 +1,16 @@
--- AIM 3.4: Creating and Querying Views and Materialized Views
-CREATE VIEW myview AS SELECT rollno, name FROM st1;
-SELECT * FROM tab;
-INSERT INTO myview VALUES(506, 'prathisha');
-SELECT * FROM myview;
-DELETE FROM myview WHERE rollno=506;
-CREATE OR REPLACE VIEW myview AS SELECT * FROM st1;
-CREATE OR REPLACE FORCE VIEW abc AS SELECT * FROM dummy_table;
-CREATE VIEW myview1 AS SELECT * FROM st1 WITH READ ONLY;
-CREATE VIEW myview2 AS SELECT * FROM st1 WHERE marks<101 WITH CHECK OPTION;
-DROP VIEW myview1;
+-- AIM 3.2: Perform Set Operations - Union, Intersection, Set Difference
+SELECT s.sname FROM sailors s, reserves r, boats b WHERE s.sid=r.sid AND b.bid=r.bid AND b.bcolor='Red'
+UNION
+SELECT s1.sname FROM sailors s1, reserves r1, boats b1 WHERE s1.sid=r1.sid AND r1.bid=b1.bid AND b1.bcolor='Green';
+
+SELECT s.sname FROM sailors s, reserves r, boats b WHERE s.sid=r.sid AND b.bid=r.bid AND b.bcolor='Red'
+UNION ALL
+SELECT s1.sname FROM sailors s1, reserves r1, boats b1 WHERE s1.sid=r1.sid AND r1.bid=b1.bid AND b1.bcolor='Green';
+
+SELECT s.sname FROM sailors s, reserves r, boats b WHERE s.sid=r.sid AND b.bid=r.bid AND b.bcolor='Red'
+INTERSECT
+SELECT s1.sname FROM sailors s1, reserves r1, boats b1 WHERE s1.sid=r1.sid AND r1.bid=b1.bid AND b1.bcolor='Green';
+
+SELECT s.sname FROM sailors s, reserves r, boats b WHERE s.sid=r.sid AND b.bid=r.bid AND b.bcolor='Red'
+MINUS
+SELECT s1.sname FROM sailors s1, reserves r1, boats b1 WHERE s1.sid=r1.sid AND r1.bid=b1.bid AND b1.bcolor='Green';
